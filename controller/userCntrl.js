@@ -448,7 +448,7 @@ const createOrder = asyncHandler(async (req, resp) => {
       await product.save()
     }
 
-    const order = await Order.find({ user: _id }).populate("orderItems.product",["title","images"]).populate("color","value");
+    const order = await Order.find({ user: _id }).populate("orderItems.product",["title","images"]).populate("orderItems.color","value");
 
     await Cart.deleteMany({userId:_id})
 
