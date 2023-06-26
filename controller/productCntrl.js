@@ -34,7 +34,7 @@ const delProduct = asyncHandler(async (req, resp) => {
 const getProduct = asyncHandler(async (req, resp) => {
   const { id } = req.params;
   try {
-    const findProduct = await Product.findById(id).populate("category","title").populate("brand","title").populate("color","value").populate("ratings","_id");
+    const findProduct = await Product.findById(id).populate("category","title").populate("brand","title").populate("color","value").populate("ratings").exec();
     resp.send(findProduct);
   } catch (error) {
     throw new Error(error);
@@ -188,7 +188,7 @@ const addRatings = asyncHandler(async (req, resp) => {
         totalRatings: actualRating,
       },
       { new: true }
-    );
+    ).populate("category","title").populate("brand","title").populate("color","value").populate("ratings","postedBy").exec();
     resp.send(ratedProduct);
   } catch (error) {
     throw new Error(error);
